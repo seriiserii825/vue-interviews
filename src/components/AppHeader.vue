@@ -1,11 +1,18 @@
 <script setup lang="ts">
 import {RouterLink} from 'vue-router'
 import {ref} from 'vue'
-const items = ref([
+
+interface IMenuItem {
+  label: string
+  icon: string
+  path: string
+}
+
+const items = ref<IMenuItem[]>([
   {
     'label': 'Authorization',
     'icon': 'pi pi-user',
-    'path': '/auth'
+    'path': '/auth',
   },
   {
     'label': 'Add',

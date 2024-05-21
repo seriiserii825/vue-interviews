@@ -39,10 +39,19 @@ const items = ref<IMenuItem[]>([
         <span class="ml-2">{{ item.label }}</span>
       </router-link>
     </template>
+    <template #end>
+      <div class="flex align-items-center menu-exit">
+        <span class="pi pi-sign-out p-p-menuitem-icon"></span>
+        <span class="ml-2">Exit</span>
+      </div>
+    </template>
   </app-menubar>
 </template>
 <style scoped>
 .menu {
   margin: 30px 0;
+}
+.menu-exit {
+  cursor: pointer;
 }
 </style>

@@ -5,6 +5,7 @@ import {useUserStore} from '@/stores/user-store';
 import type {ComputedRef} from 'vue';
 import {computed} from 'vue';
 import {storeToRefs} from 'pinia';
+import { getAuth, signOut } from 'firebase/auth';
 const router = useRouter()
 
 const userStore = useUserStore()
@@ -43,9 +44,10 @@ const items = ref<IMenuItem[]>([
     'show': computed((): boolean => !!user_id.value)
   },
 ])
-function logout() {
+async function logout() {
+  await signOut(getAuth())
   user_id.value = ''
-  router.push({name: 'auth'})
+  router.push('/auth')
 }
 </script>
 <template>

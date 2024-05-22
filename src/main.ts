@@ -15,6 +15,7 @@ import App from './App.vue';
 import router from './router';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
+import ProgressSpinner from "primevue/progressspinner";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCzM0gZXVW_6i5fjPSL9wkYeYBUi7CjnJY",
@@ -37,5 +38,6 @@ app.component('app-menubar', Menubar)
 app.component('app-input-text', InputText)
 app.component('app-button', Button)
 app.component('app-toast', Toast)
+app.component('app-progress-spinner', ProgressSpinner)
 
 app.mount('#app')

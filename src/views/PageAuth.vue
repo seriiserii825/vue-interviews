@@ -35,10 +35,7 @@ async function signIn() {
   const auth = getAuth()
   try {
     isLoading.value = true
-    const userCredential = await signInWithEmailAndPassword(auth, email.value, password.value)
-    const user = userCredential.user
-    console.log(user)
-    isLoading.value = false
+    await signInWithEmailAndPassword(auth, email.value, password.value)
     router.push('/')
   } catch (error: unknown) {
     if (error instanceof Error) {

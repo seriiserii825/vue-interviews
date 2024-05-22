@@ -6,6 +6,7 @@ import type {RouteRecordRaw, RouteLocationNormalized, NavigationGuardNext} from 
 function checkAuth(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
   const userStore = useUserStore()
   const {user_id} = storeToRefs(userStore)
+  console.log(user_id.value, "user_id.value");
   if (user_id.value === '') {
     next({name: 'auth'})
   } else {
@@ -29,17 +30,18 @@ const routes: RouteRecordRaw[] = [
     path: '/auth',
     name: 'auth',
     component: () => import('@/views/PageAuth.vue'),
-    beforeEnter: checkAuth
   },
   {
     path: '/list',
     name: 'list',
-    component: () => import('@/views/PageList.vue')
+    component: () => import('@/views/PageList.vue'),
+    beforeEnter: checkAuth
   },
   {
     path: '/statistics',
     name: 'statistics',
-    component: () => import('@/views/PageStatistics.vue')
+    component: () => import('@/views/PageStatistics.vue'),
+    beforeEnter: checkAuth
   },
 ]
 

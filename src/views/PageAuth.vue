@@ -8,7 +8,7 @@ const userStore = useUserStore()
 const {user_id} = storeToRefs(userStore)
 
 onMounted(() => {
-  user_id.value = 'user'
+  // user_id.value = 'user'
 })
 </script>
 

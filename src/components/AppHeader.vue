@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import {RouterLink} from 'vue-router'
+import {RouterLink, useRouter} from 'vue-router'
 import {ref} from 'vue'
 import {useUserStore} from '@/stores/user-store';
 import type {ComputedRef} from 'vue';
 import {computed} from 'vue';
 import {storeToRefs} from 'pinia';
+const router = useRouter()
 
 const userStore = useUserStore()
 const {user_id} = storeToRefs(userStore)
@@ -42,6 +43,10 @@ const items = ref<IMenuItem[]>([
     'show': computed((): boolean => !!user_id.value)
   },
 ])
+function logout() {
+  user_id.value = ''
+  router.push({name: 'auth'})
+}
 </script>
 <template>
   <app-menubar :model="items" class="menu">
@@ -55,7 +60,7 @@ const items = ref<IMenuItem[]>([
     </template>
     <template #end>
       <template v-if="user_id">
-        <div @click="user_id = ''" class="flex align-items-center menu-exit">
+        <div @click="logout" class="flex align-items-center menu-exit">
           <span class="pi pi-sign-out p-p-menuitem-icon"></span>
           <span class="ml-2">Exit</span>
         </div>

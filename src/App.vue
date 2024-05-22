@@ -23,7 +23,7 @@ onMounted(() => {
 })
 </script>
 <template>
-  <ProgressSpinner v-if="is_loading" />
+  <app-progress-spinner v-if="is_loading" />
   <div v-else class="container m-auto p-5">
     <AppHeader />
     <div class="content">

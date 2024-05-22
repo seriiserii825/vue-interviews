@@ -46,7 +46,6 @@ const items = ref<IMenuItem[]>([
 ])
 async function logout() {
   await signOut(getAuth())
-  user_id.value = ''
   router.push('/auth')
 }
 </script>

@@ -17,13 +17,15 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import ProgressSpinner from "primevue/progressspinner";
 
+console.log(import.meta.env, "import.meta.env");
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCzM0gZXVW_6i5fjPSL9wkYeYBUi7CjnJY",
-  authDomain: "vue-interviews-2e421.firebaseapp.com",
-  projectId: "vue-interviews-2e421",
-  storageBucket: "vue-interviews-2e421.appspot.com",
-  messagingSenderId: "79925594363",
-  appId: "1:79925594363:web:8795d44b10da590bbd485e"
+  apiKey: import.meta.env.VITE_APP_API_KEY,
+  authDomain: import.meta.env.VITE_APP_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_APP_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_APP_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_APP_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_APP_ID
 };
 
 initializeApp(firebaseConfig);

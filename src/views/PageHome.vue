@@ -1,6 +1,14 @@
 <script setup lang="ts">
+// todo: add notification for success or fail
 import {computed, ref} from 'vue';
+import type {IInterview} from '@/interfaces/interview/IInterview';
+import {v4 as uuidv4} from 'uuid';
+import {getAuth} from 'firebase/auth';
+import {getFirestore, setDoc, doc} from 'firebase/firestore';
+import {useRouter} from 'vue-router';
 
+const router = useRouter();
+const db = getFirestore();
 const company = ref('');
 const vacancyLink = ref('');
 const hrName = ref('');
@@ -8,8 +16,37 @@ const contactTelegram = ref('');
 const contactWhatsApp = ref('');
 const contactPhone = ref('');
 const loading = ref(false);
-function addNewInterview() {
+async function addNewInterview() {
   loading.value = true;
+  const payload: IInterview = {
+    id: uuidv4(),
+    company: company.value,
+    vacancyLink: vacancyLink.value,
+    hrName: hrName.value,
+    contactTelegram: contactTelegram.value,
+    contactWhatsApp: contactWhatsApp.value,
+    contactPhone: contactPhone.value,
+    createdAt: new Date(),
+  };
+  const user_id = getAuth().currentUser?.uid;
+  if (user_id) {
+    await setDoc(doc(db, `users/${user_id}/interviews/${payload.id}`), payload)
+      .then(() => {
+        company.value = '';
+        vacancyLink.value = '';
+        hrName.value = '';
+        contactTelegram.value = '';
+        contactWhatsApp.value = '';
+        contactPhone.value = '';
+        router.push({name: 'list'})
+      })
+      .catch((error) => {
+        console.error('Error adding document: ', error);
+      })
+      .finally(() => {
+        loading.value = false;
+      });
+  }
 }
 const disabledSaveButton = computed(() => {
   return !company.value || !vacancyLink.value || !hrName.value;

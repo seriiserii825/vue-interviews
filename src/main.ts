@@ -16,8 +16,9 @@ import router from './router';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import ProgressSpinner from "primevue/progressspinner";
+import AppCard from "primevue/card"
 
-console.log(import.meta.env, "import.meta.env");
+// console.log(import.meta.env, "import.meta.env");
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_APP_API_KEY,
@@ -41,5 +42,6 @@ app.component('app-input-text', InputText)
 app.component('app-button', Button)
 app.component('app-toast', Toast)
 app.component('app-progress-spinner', ProgressSpinner)
+app.component('app-card', AppCard)
 
 app.mount('#app')

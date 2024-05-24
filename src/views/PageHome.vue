@@ -44,9 +44,12 @@ async function addNewInterview() {
         severity: 'success',
         summary: 'Успешно',
         detail: 'Собеседование добавлено',
-        life: 3000
+        life: 2000
       })
       loading.value = false
+      setTimeout(() => {
+        router.push({name: 'list'})
+      }, 2000)
     } catch (error) {
       if (error instanceof Error) {
         console.error('Error adding document: ', error)

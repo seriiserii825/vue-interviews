@@ -69,12 +69,15 @@ async function logout() {
     </template>
   </app-menubar>
 </template>
-<style scoped>
+<style>
 .menu {
   margin: 30px 0;
 }
 
 .menu-exit {
   cursor: pointer;
+}
+.router-link-exact-active {
+  background-color: #eee;
 }
 </style>

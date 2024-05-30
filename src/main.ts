@@ -4,6 +4,7 @@ import 'primeicons/primeicons.css';
 import 'primevue/resources/themes/saga-blue/theme.css';
 import './assets/main.css';
 import ToastService from "primevue/toastservice";
+import ConfirmationService from "primevue/confirmationservice";
 import Toast from "primevue/toast";
 
 import {createPinia} from 'pinia';
@@ -17,6 +18,10 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import ProgressSpinner from "primevue/progressspinner";
 import AppCard from "primevue/card"
+import DataTable from "primevue/datatable";
+import Column from "primevue/column";
+import ConfirmDialog from "primevue/confirmdialog";
+import InlineMessage from "primevue/inlinemessage";
 
 // console.log(import.meta.env, "import.meta.env");
 
@@ -34,6 +39,7 @@ initializeApp(firebaseConfig);
 const app = createApp(App)
 
 app.use(ToastService)
+app.use(ConfirmationService)
 app.use(createPinia())
 app.use(PrimeVue)
 app.use(router)
@@ -43,5 +49,9 @@ app.component('app-button', Button)
 app.component('app-toast', Toast)
 app.component('app-progress-spinner', ProgressSpinner)
 app.component('app-card', AppCard)
+app.component('AppDataTable', DataTable)
+app.component('AppColumn', Column)
+app.component('AppConfirmDialog', ConfirmDialog)
+app.component('AppInlineMessage', InlineMessage)
 
 app.mount('#app')

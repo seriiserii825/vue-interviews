@@ -1,5 +1,5 @@
   export interface IInterview {
-    id: number;
+    id: string;
     company: string;
     vacancyLink: string;
     hrName: string;

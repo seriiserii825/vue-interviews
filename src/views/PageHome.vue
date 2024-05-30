@@ -3,11 +3,12 @@
 import { computed, ref } from 'vue'
 import type { IInterview } from '@/interfaces/interview/IInterview'
 import { v4 as uuidv4 } from 'uuid'
-import { getAuth } from 'firebase/auth'
 import { getFirestore, setDoc, doc } from 'firebase/firestore'
 import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
+import { useUserStore } from '@/stores/user-store'
 
+const user_store = useUserStore()
 const toast = useToast()
 const router = useRouter()
 const db = getFirestore()
@@ -30,7 +31,7 @@ async function addNewInterview() {
     contactPhone: contactPhone.value,
     createdAt: new Date()
   }
-  const user_id = getAuth().currentUser?.uid
+  const user_id = user_store.user_id
   if (user_id) {
     try {
       await setDoc(doc(db, `users/${user_id}/interviews/${payload.id}`), payload)
@@ -48,8 +49,8 @@ async function addNewInterview() {
       })
       loading.value = false
       setTimeout(() => {
-        router.push({name: 'list'})
-      }, 2000)
+        router.push({ name: 'list' })
+      }, 500)
     } catch (error) {
       if (error instanceof Error) {
         console.error('Error adding document: ', error)

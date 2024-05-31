@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore'
+import { getFirestore, doc, getDoc, updateDoc, Timestamp } from 'firebase/firestore'
 import { useUserStore } from '@/stores/user-store'
-import type { IInterview } from '@/interfaces/interview/IInterview'
+import type { IInterview, IStage } from '@/interfaces/interview/IInterview'
 import { useRoute } from 'vue-router'
-import dayjs from 'dayjs'
 const route = useRoute()
 const user_store = useUserStore()
 
@@ -18,7 +17,19 @@ async function getData() {
   try {
     const docSnap = await getDoc(docref)
     if (docSnap.exists()) {
-      interview.value = docSnap.data() as IInterview
+      const data = docSnap.data() as IInterview
+      if (data.stages && data.stages.length) {
+        data.stages = data.stages.map((stage: IStage) => {
+          if (stage.date && stage.date instanceof Timestamp) {
+            return {
+              ...stage,
+              date: stage.date.toDate()
+            }
+          }
+          return stage
+        })
+      }
+      interview.value = data
     }
     is_loading.value = false
   } catch (error) {
@@ -33,7 +44,7 @@ function addStage() {
     } else {
       interview.value.stages.push({
         name: '',
-        date: '',
+        date: null,
         description: ''
       })
     }
@@ -52,11 +63,6 @@ async function saveInterview() {
     } catch (error) {
       console.log(error, 'error')
     }
-  }
-}
-function saveDateStage(index: number) {
-  if (interview.value && interview.value.stages) {
-    interview.value.stages[index].date = dayjs(interview.value.stages[index].date).format('DD.MM.YYYY')
   }
 }
 onMounted(async () => {
@@ -141,7 +147,6 @@ onMounted(async () => {
                 :id="`stage_calendar_${index}`"
                 v-model="stage.date"
                 dateFormat="dd.mm.yy"
-                @date-select="saveDateStage(index)"
               />
             </div>
             <div class="flex flex-column gap-2">

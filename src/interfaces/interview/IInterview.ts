@@ -16,5 +16,5 @@
   export interface IStage {
     name: string;
     description: string;
-    date: string;
+    date: null | Date;
   }

@@ -15,6 +15,10 @@ import {createApp} from 'vue';
 import App from './App.vue';
 import router from './router';
 import InputText from 'primevue/inputtext';
+import InputNumber from 'primevue/inputnumber';
+import Textarea from "primevue/textarea";
+import RadioButton from "primevue/radiobutton";
+import Calendar from "primevue/calendar";
 import Button from 'primevue/button';
 import ProgressSpinner from "primevue/progressspinner";
 import AppCard from "primevue/card"
@@ -45,6 +49,10 @@ app.use(PrimeVue)
 app.use(router)
 app.component('app-menubar', Menubar)
 app.component('app-input-text', InputText)
+app.component('app-input-number', InputNumber)
+app.component('app-textarea', Textarea)
+app.component('app-radio-button', RadioButton)
+app.component('app-calendar', Calendar)
 app.component('app-button', Button)
 app.component('app-toast', Toast)
 app.component('app-progress-spinner', ProgressSpinner)

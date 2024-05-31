@@ -26,6 +26,8 @@ import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import ConfirmDialog from "primevue/confirmdialog";
 import InlineMessage from "primevue/inlinemessage";
+import Badge from "primevue/badge";
+import Tooltip from "primevue/tooltip";
 
 // console.log(import.meta.env, "import.meta.env");
 
@@ -42,11 +44,13 @@ initializeApp(firebaseConfig);
 
 const app = createApp(App)
 
+app.directive('tooltip', Tooltip)
 app.use(ToastService)
 app.use(ConfirmationService)
 app.use(createPinia())
 app.use(PrimeVue)
 app.use(router)
+app.component('app-badge', Badge)
 app.component('app-menubar', Menubar)
 app.component('app-input-text', InputText)
 app.component('app-input-number', InputNumber)

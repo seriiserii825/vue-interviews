@@ -12,7 +12,7 @@ import {
 import { useUserStore } from '@/stores/user-store'
 import type { IInterview } from '@/interfaces/interview/IInterview'
 import { useConfirm } from 'primevue/useconfirm'
-import {E_Router} from '@/enums/E_Router'
+import { E_Router } from '@/enums/E_Router'
 
 const confirm = useConfirm()
 const user_store = useUserStore()
@@ -43,8 +43,7 @@ async function deleteInterview(id: string) {
     rejectClass: 'p-button-text',
     accept: async () => {
       is_loading.value = true
-      const result = await deleteDoc(doc(db, `users/${user_id}/interviews/${id}`))
-      // console.log(result, 'result')
+      await deleteDoc(doc(db, `users/${user_id}/interviews/${id}`))
       await getAllInterviews()
       is_loading.value = false
     }
@@ -68,7 +67,7 @@ onMounted(async () => {
       <AppColumn field="company" header="Company"></AppColumn>
       <AppColumn field="vacancyLink" header="Vacancy link">
         <template #body="slotProps">
-          <a :href="slotProps.data.vacancyLink" target="_blank">{{ slotProps.data.vacancyLink }}</a>
+          <a :href="slotProps.data.vacancyLink" target="_blank">Link to vacancy</a>
         </template>
       </AppColumn>
       <AppColumn header="Contacts">
@@ -97,10 +96,49 @@ onMounted(async () => {
         </template>
       </AppColumn>
       <AppColumn field="hrName" header="HR name"></AppColumn>
+      <AppColumn header="Salary">
+        <template #body="slotProps">
+          <span v-if="!slotProps.data.salary_from" style="color: var(--red-700); font-weight: bold"
+            >Empty</span
+          >
+          <span v-else>{{ slotProps.data.salary_from }} - {{ slotProps.data.salary_to }}</span>
+        </template>
+      </AppColumn>
+      <AppColumn header="Result">
+        <template #body="slotProps">
+          <span v-if="!slotProps.data.result" style="color: var(--red-700); font-weight: bold"
+            >Empty</span
+          >
+          <template v-else>
+            <app-badge
+              :severity="slotProps.data.result === 'Offer' ? 'success' : 'danger'"
+              :value="slotProps.data.result === 'Offer' ? 'Offer' : 'Refusal'"
+            />
+          </template>
+        </template>
+      </AppColumn>
+      <AppColumn header="Stages">
+        <template #body="slotProps">
+          <span v-if="!slotProps.data.stages" style="color: var(--red-700); font-weight: bold"
+            >Empty</span
+          >
+          <template v-else>
+            <div class="flex gap-2">
+              <app-badge
+                v-for="(stage, index) in slotProps.data.stages"
+                :key="index"
+                :value="index + 1"
+                severity="info"
+                v-tooltip.top="stage.name"
+              />
+            </div>
+          </template>
+        </template>
+      </AppColumn>
       <AppColumn header="Actions">
         <template #body="slotProps">
           <router-link
-              :to="`${E_Router.EDIT_INTERVIEW}/${slotProps.data.id}`"
+            :to="`${E_Router.EDIT_INTERVIEW}/${slotProps.data.id}`"
             class="p-button p-button-rounded p-button-text"
           >
             <span class="pi pi-pencil"></span>
@@ -113,7 +151,6 @@ onMounted(async () => {
           </button>
         </template>
       </AppColumn>
-      <AppColumn field="createdAt" header="Created at"></AppColumn>
     </AppDataTable>
   </div>
   <div v-else>

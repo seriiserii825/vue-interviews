@@ -12,6 +12,7 @@ import {
 import { useUserStore } from '@/stores/user-store'
 import type { IInterview } from '@/interfaces/interview/IInterview'
 import { useConfirm } from 'primevue/useconfirm'
+import {E_Router} from '@/enums/E_Router'
 
 const confirm = useConfirm()
 const user_store = useUserStore()
@@ -99,7 +100,7 @@ onMounted(async () => {
       <AppColumn header="Actions">
         <template #body="slotProps">
           <router-link
-            :to="`/edit/${slotProps.data.id}`"
+              :to="`${E_Router.EDIT_INTERVIEW}/${slotProps.data.id}`"
             class="p-button p-button-rounded p-button-text"
           >
             <span class="pi pi-pencil"></span>
